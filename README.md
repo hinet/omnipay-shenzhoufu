@@ -10,7 +10,6 @@ composer require hinet/omnipay-shenzhoufu
 # 使用
 
 ```php
-use Omnipay\Omnipay;
 $gateway    = Omnipay::create('Shengzhoufu');
 $gateway->setPartnerId($config['partner_id']);
 $gateway->setApiKey($config['api_key']);
