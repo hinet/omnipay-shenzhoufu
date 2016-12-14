@@ -1,0 +1,16 @@
+{
+    "name": "honfei/omnipay-shenzhoufu",
+    "description": "shenzhoufu for laravel 5.*",
+    "type": "library",
+    "require": {
+        "omnipay/common": "^2.5"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "hinet",
+            "email": "63603636@qq.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
