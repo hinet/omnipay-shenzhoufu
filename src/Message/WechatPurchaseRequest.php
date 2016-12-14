@@ -22,18 +22,18 @@ class WechatPurchaseRequest extends AbstractRequest
             'amount'
         );
         $data = array (
-            'version'            => static::API_VERSION,//*
+            'version'            => static::API_VERSION,
             'merId'           => $this->getPartnerId(),
-            'payMoney'      => $this->getAmount(),//*
-            'orderId'             => $this->getOrderId(),//*
+            'payMoney'      => $this->getAmount(),
+            'orderId'             => $this->getOrderId(),
             'returnUrl'           => $this->getNotifyUrl(),
             'merUserName'           => $this->getUserName(),
-            'merUserMail'     => $this->getEmail(),//*
-            'privateField'         => $this->getPrivateField(),
-            'verifyType'        => $this->getVerifyType(),//*
+            'merUserMail'     => $this->getEmail(),
+            'verifyType'        => $this->getVerifyType(),
         );
         //过滤数组为空值
         $data = array_filter($data);
+        $data['privateField'] = $this->getPrivateField();//privateField是空值也要传递，所在放在外面
         $data['md5String'] = Helpers::sign($data, $this->getApiKey());
         return $data;
     }
@@ -111,7 +111,6 @@ class WechatPurchaseRequest extends AbstractRequest
     public function sendData($data)
     {
         $request = $this->httpClient->post($this->getEndpoint(), ["Content-type"=>"text/html; charset=utf-8"], $data);
-        $request->getCurlOptions()->set(CURLOPT_SSLVERSION, 6); // CURL_SSLVERSION_TLSv1_2 for libcurl < 7.35
         $reponse = $request->send();
         return $this->response = new WechatResponse($this, $reponse->json());
     }
