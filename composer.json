@@ -1,5 +1,5 @@
 {
-    "name": "honfei/omnipay-shenzhoufu",
+    "name": "hinet/omnipay-shenzhoufu",
     "description": "shenzhoufu for laravel 5.*",
     "type": "library",
     "require": {
@@ -12,5 +12,8 @@
             "email": "63603636@qq.com"
         }
     ],
+    "autoload": {
+        "psr-4": { "Omnipay\\Shenzhoufu\\" : "src/" }
+    },
     "minimum-stability": "dev"
 }
