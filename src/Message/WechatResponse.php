@@ -31,17 +31,12 @@ class WechatResponse extends AbstractResponse
         '912'=>'非法订单',
         '917'=>'参数格式不正确',
     );
-//    public function __construct(RequestInterface $request, $data)
-//    {
-//        parse_str($this->data, $data);//函数把查询字符串解析到变量中
-//        parent::__construct($request, $data);
-//    }
     public function isSuccessful()
     {
         if($this->data['resCode'] == 200){
             $sign=MD5($this->data['resCode'] + $this->data['orderId'] + $this->data['qrCodeUrl'] + $this->data['privateKey']);
             //校验签名
-            return $sign = $this->data['md5String'];
+            return $sign == $this->data['md5String'];
         }else{
             return false;
         }
@@ -56,6 +51,7 @@ class WechatResponse extends AbstractResponse
     //获取订单号
     public function getOrderID()
     {
+        var_dump($this->data);
         return isset($this->data['orderId']) ? (string) $this->data['orderId'] : null;
     }
 

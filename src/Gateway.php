@@ -33,6 +33,15 @@ class Gateway extends AbstractGateway
     public function setApiKey($value){
         return $this->setParameter('apiKey',$value);
     }
+    public function getNotifyUrl()
+    {
+        return $this->getParameter('notifyUrl');
+    }
+
+    public function setNotifyUrl($value)
+    {
+        return $this->setParameter('notifyUrl', $value);
+    }
 
     public function purchase(array $parameters = array()){
         return $this->createRequest('\Omnipay\Shenzhoufu\Message\WechatPurchaseRequest', $parameters);

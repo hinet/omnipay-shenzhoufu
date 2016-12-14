@@ -9,6 +9,7 @@
 namespace Omnipay\Shenzhoufu\Message;
 
 use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Shenzhoufu\Helpers;
 
 class WechatPurchaseRequest extends AbstractRequest
 {
@@ -18,7 +19,7 @@ class WechatPurchaseRequest extends AbstractRequest
     public function getData(){
         $this->validate(
             'orderId',
-            'payMoney'
+            'amount'
         );
         $data = array (
             'version'            => static::API_VERSION,//*
@@ -109,13 +110,12 @@ class WechatPurchaseRequest extends AbstractRequest
     }
     public function sendData($data)
     {
-        $request = $this->httpClient->post($this->getEndpoint(), null, http_build_query($data, '', '&'))
+        $request = $this->httpClient->post($this->getEndpoint(), ["Content-type"=>"text/html; charset=utf-8"], $data);
         $request->getCurlOptions()->set(CURLOPT_SSLVERSION, 6); // CURL_SSLVERSION_TLSv1_2 for libcurl < 7.35
-        $request->send();
-
-        return $this->response = new WechatResponse($this, $request->json());
+        $reponse = $request->send();
+        return $this->response = new WechatResponse($this, $reponse->json());
     }
     public function getEndPoint(){
-        return $this->endpoint ? $this->endpoint ? null;
+        return $this->endpoint ? $this->endpoint : null;
     }
 }
