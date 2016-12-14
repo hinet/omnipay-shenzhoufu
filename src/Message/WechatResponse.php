@@ -14,6 +14,7 @@ use Omnipay\Common\Message\RequestInterface;
 
 class WechatResponse extends AbstractResponse
 {
+    private $apikey = '';
     public static $MESSAGES = array(
         '200'=>'请求通过，神州付收单，获取到二维码字符串',
         '101'=>'md5 验证失败',
@@ -31,10 +32,16 @@ class WechatResponse extends AbstractResponse
         '912'=>'非法订单',
         '917'=>'参数格式不正确',
     );
+    function __construct(RequestInterface $request,$data,$key)
+    {
+        $this->apikey = $key;
+        parent::__construct($request,$data);
+    }
+
     public function isSuccessful()
     {
         if($this->data['resCode'] == 200){
-            $sign=MD5($this->data['resCode'] + $this->data['orderId'] + $this->data['qrCodeUrl'] + $this->data['privateKey']);
+            $sign = md5($this->data['resCode'].$this->data['orderId'].$this->data['qrCodeUrl'].$this->apikey);
             //校验签名
             return $sign == $this->data['md5String'];
         }else{

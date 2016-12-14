@@ -112,7 +112,7 @@ class WechatPurchaseRequest extends AbstractRequest
     {
         $request = $this->httpClient->post($this->getEndpoint(), ["Content-type"=>"text/html; charset=utf-8"], $data);
         $reponse = $request->send();
-        return $this->response = new WechatResponse($this, $reponse->json());
+        return $this->response = new WechatResponse($this, $reponse->json(),$this->getApiKey());
     }
     public function getEndPoint(){
         return $this->endpoint ? $this->endpoint : null;
