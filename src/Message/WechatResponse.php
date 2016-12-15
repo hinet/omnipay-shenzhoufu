@@ -11,6 +11,7 @@ namespace Omnipay\Shenzhoufu\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RequestInterface;
+use Omnipay\Shenzhoufu\QRcode;
 
 class WechatResponse extends AbstractResponse
 {
@@ -50,10 +51,21 @@ class WechatResponse extends AbstractResponse
 
 
     }
-    //获取二维码
+    //获取二维码地址
     public function getQrcodeUrl()
     {
         return isset($this->data['qrCodeUrl']) ? (string) $this->data['qrCodeUrl'] : null;
+    }
+
+    /**
+     * 生成二维码图片
+     * @param int $matrixPointSize 点的大小：1到10
+     * @param string $errorCorrectionLevel //纠错级别：L、M、Q、H
+     */
+    public function getQrcode($matrixPointSize=4,$errorCorrectionLevel = 'L'){
+        $url = urldecode($this->data['qrCodeUrl']);
+        // 输出图像
+        exit(QRcode::png($url,false,$errorCorrectionLevel,$matrixPointSize));
     }
     //获取订单号
     public function getOrderID()
