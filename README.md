@@ -26,3 +26,20 @@ if($response->isSuccessful()){
      $response->getMessage();
 }
 ```
+
+# 异步通知回调
+
+```php
+$gateway = Omnipay::create('Shenzhoufu');
+$options = [
+        'request_params'=> $_REQUEST,
+];
+$response = $gateway->completePurchase($options)->send();
+if ($response->isSuccessful() && $response->getTransactionReference()) {
+    //支付成功后操作
+    exit($response->getOrderID());
+} else {
+    //支付失败通知.
+    exit('支付失败');
+}
+```
